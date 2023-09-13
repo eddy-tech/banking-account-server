@@ -23,7 +23,7 @@ public class ContactDto implements Serializable {
     private String iban;
     private Integer userId;
 
-    private ContactDto fromContact(Contact contact){
+    public static ContactDto fromContact(Contact contact){
         return ContactDto.builder()
                 .id(contact.getId())
                 .firstName(contact.getFirstName())
@@ -34,7 +34,7 @@ public class ContactDto implements Serializable {
                 .build();
     }
 
-    private Contact toContactDto (ContactDto contact){
+    public static Contact toContactDto (ContactDto contact){
         return Contact.builder()
                 .firstName(contact.getFirstName())
                 .lastName(contact.getLastName())

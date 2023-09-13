@@ -24,7 +24,7 @@ public class AddressDto implements Serializable {
     private String country;
     private Integer userId;
 
-    private static AddressDto fromAddress(Address address) {
+    public static AddressDto fromAddress(Address address) {
         return AddressDto.builder()
                 .id(address.getId())
                 .street(address.getStreet())
@@ -36,7 +36,7 @@ public class AddressDto implements Serializable {
                 .build();
     }
 
-    private static Address fromAddressDto(AddressDto address) {
+    public static Address toAddressDto(AddressDto address) {
         return Address.builder()
                 .id(address.getId())
                 .street(address.getStreet())
