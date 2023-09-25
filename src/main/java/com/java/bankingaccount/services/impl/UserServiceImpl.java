@@ -1,8 +1,11 @@
 package com.java.bankingaccount.services.impl;
 
+import com.java.bankingaccount.dto.AccountDto;
 import com.java.bankingaccount.dto.UserDto;
 import com.java.bankingaccount.models.User;
+import com.java.bankingaccount.repositories.AccountRepository;
 import com.java.bankingaccount.repositories.UserRepository;
+import com.java.bankingaccount.services.AccountService;
 import com.java.bankingaccount.services.UserService;
 import com.java.bankingaccount.validators.ObjectsValidator;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final AccountService accountService;
     private final ObjectsValidator<UserDto> validator;
 
     @Override
@@ -46,5 +50,25 @@ public class UserServiceImpl implements UserService {
     public void delete(Integer id) {
         //todo check before delete
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public Integer validateAccount(Integer id) {
+        var user = userRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("No user was found for user account validation"));
+        user.setActive(true);
+        var account = AccountDto.builder()
+                .user(UserDto.fromUser(user))
+                .build();
+         accountService.save(account);
+         userRepository.save(user);
+         return user.getId();
+    }
+
+    @Override
+    public Integer invalidateAccount(Integer id) {
+        var user = userRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("No user was found for user account validation"));
+        user.setActive(false);
+        userRepository.save(user);
+        return user.getId();
     }
 }

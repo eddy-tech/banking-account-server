@@ -32,6 +32,15 @@ public class AccountServiceImpl implements AccountService {
         }
         validator.validate(accountDto);
         Account account = AccountDto.toAccountDto(accountDto);
+        var isUserAlreadyAccount = accountRepository.findByUserId(account.getId()).isPresent();
+        if(isUserAlreadyAccount){
+            throw new OperationNoPermittedException(
+                "The selected user has already an active account",
+                "Create account",
+                "Account service",
+                "Account creating"
+            );
+        }
         account.setIban(generateRandomIban());
 
         return accountRepository.save(account).getId();
