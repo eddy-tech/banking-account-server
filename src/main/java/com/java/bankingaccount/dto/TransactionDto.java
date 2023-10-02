@@ -13,6 +13,7 @@ import lombok.Value;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * DTO for {@link com.java.bankingaccount.models.Transaction}
@@ -30,12 +31,14 @@ public class TransactionDto implements Serializable {
     private TransactionType type;
     private String destinationIban;
     private Integer userId;
+    private LocalDate transactionDate;
 
     public static TransactionDto fromTransaction(Transaction transaction) {
         return TransactionDto.builder()
                 .id(transaction.getId())
                 .amount(transaction.getAmount())
                 .type(transaction.getType())
+                .transactionDate(transaction.getTransactionDate())
                 .destinationIban(transaction.getDestinationIban())
                 .userId(transaction.getUser().getId())
                 .build();
@@ -46,6 +49,7 @@ public class TransactionDto implements Serializable {
                 .id(transaction.getId())
                 .amount(transaction.getAmount())
                 .type(transaction.getType())
+                .transactionDate(LocalDate.now())
                 .destinationIban(transaction.getDestinationIban())
                 .user(User.builder().id(transaction.getUserId()).build())
                 .build();

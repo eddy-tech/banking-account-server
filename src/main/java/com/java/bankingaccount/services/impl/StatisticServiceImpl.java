@@ -1,5 +1,6 @@
 package com.java.bankingaccount.services.impl;
 
+import com.java.bankingaccount.projections.TransactionSumDetails;
 import com.java.bankingaccount.repositories.TransactionRepository;
 import com.java.bankingaccount.services.StatisticService;
 import com.java.bankingaccount.utils.TransactionType;
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Map;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ import java.util.Map;
 public class StatisticServiceImpl implements StatisticService {
     private final TransactionRepository transactionRepository;
     @Override
-    public Map<LocalDate, BigDecimal> findSumTransactionByDate(LocalDate startDate, LocalDate endDate, Integer userId) {
+    public List<TransactionSumDetails> findSumTransactionByDate(LocalDate startDate, LocalDate endDate, Integer userId) {
         LocalDateTime start = LocalDateTime.of(startDate, LocalTime.of(0,0,0));
         LocalDateTime end = LocalDateTime.of(endDate, LocalTime.of(0,0,0));
 

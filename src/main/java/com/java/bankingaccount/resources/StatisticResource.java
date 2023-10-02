@@ -1,12 +1,15 @@
 package com.java.bankingaccount.resources;
 
+import com.java.bankingaccount.projections.TransactionSumDetails;
 import com.java.bankingaccount.services.StatisticService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -16,9 +19,9 @@ public class StatisticResource {
     private final StatisticService statisticService;
 
     @GetMapping("/sum-by-date/{userId}")
-    public ResponseEntity<Map<LocalDate, BigDecimal>> findSumTransactionByDate(
-            @RequestParam(name = "startDate") LocalDate startDate,
-            @RequestParam(name = "endDate") LocalDate endDate,
+    public ResponseEntity<List<TransactionSumDetails>> findSumTransactionByDate(
+            @RequestParam(name = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(name = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
             @PathVariable(name = "userId") Integer userId) {
         return ResponseEntity.ok(statisticService.findSumTransactionByDate(startDate, endDate, userId));
     }
