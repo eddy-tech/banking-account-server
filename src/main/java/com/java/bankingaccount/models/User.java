@@ -18,6 +18,7 @@ import java.util.List;
 public class User extends AbstractEntity{
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String email;
     private String password;
     private boolean active;
