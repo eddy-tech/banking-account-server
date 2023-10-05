@@ -37,7 +37,6 @@ public class AddressDto implements Serializable {
     }
 
     public static Address toAddressDto(AddressDto address) {
-
         return Address.builder()
                 .id(address.getId())
                 .street(address.getStreet())
