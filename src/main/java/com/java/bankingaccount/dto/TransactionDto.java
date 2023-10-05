@@ -23,7 +23,6 @@ import java.time.LocalDate;
 @Builder
 public class TransactionDto implements Serializable {
     private Integer id;
-
     @Positive
     @Max(value = 100000000)
     @Min(value = 10)
@@ -32,6 +31,7 @@ public class TransactionDto implements Serializable {
     private String destinationIban;
     private Integer userId;
     private LocalDate transactionDate;
+
 
     public static TransactionDto fromTransaction(Transaction transaction) {
         return TransactionDto.builder()

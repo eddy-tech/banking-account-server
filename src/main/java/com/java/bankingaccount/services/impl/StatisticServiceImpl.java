@@ -19,6 +19,7 @@ import java.util.List;
 @Transactional
 public class StatisticServiceImpl implements StatisticService {
     private final TransactionRepository transactionRepository;
+  
     @Override
     public List<TransactionSumDetails> findSumTransactionByDate(LocalDate startDate, LocalDate endDate, Integer userId) {
         LocalDateTime start = LocalDateTime.of(startDate, LocalTime.of(0,0,0));

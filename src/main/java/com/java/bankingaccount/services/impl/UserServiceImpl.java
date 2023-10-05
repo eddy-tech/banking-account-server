@@ -55,7 +55,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer validateAccount(Integer id) {
         var user = userRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("No user was found for user account validation"));
-
         var account = AccountDto.builder()
                 .user(UserDto.fromUser(user))
                 .build();

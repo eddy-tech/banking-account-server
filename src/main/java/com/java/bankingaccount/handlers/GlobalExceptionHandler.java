@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionRepresentation> handleException(OperationNoPermittedException exception){
         ExceptionRepresentation representation = ExceptionRepresentation.builder()
                 .errorMessage(exception.getErrorMessage())
+                .errorMessage(exception.getMessage())
                 .build();
 
         return ResponseEntity
@@ -56,5 +57,4 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(representation);
     }
-
 }

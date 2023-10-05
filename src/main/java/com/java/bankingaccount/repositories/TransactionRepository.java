@@ -1,5 +1,6 @@
 package com.java.bankingaccount.repositories;
 
+import com.java.bankingaccount.dto.TransactionDto;
 import com.java.bankingaccount.models.Transaction;
 import com.java.bankingaccount.projections.TransactionSumDetails;
 import com.java.bankingaccount.utils.TransactionType;
@@ -10,6 +11,10 @@ import org.springframework.data.repository.query.Param;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
     List<Transaction> findAllByUserId(Integer userId);
