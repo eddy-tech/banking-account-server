@@ -33,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
         validator.validate(accountDto);
         Account account = AccountDto.toAccountDto(accountDto);
         var isUserAlreadyAccount = accountRepository.findByUserId(account.getId()).isPresent();
-        if(isUserAlreadyAccount){
+        if(isUserAlreadyAccount && account.getUser().isActive()){
             throw new OperationNoPermittedException(
                 "The selected user has already an active account",
                 "Create account",

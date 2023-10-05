@@ -19,24 +19,23 @@ import java.time.LocalDateTime;
 public class UserDto implements Serializable {
     private Integer id;
 
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull(message = "The firstname must not be empty")
+    @NotEmpty(message = "The firstname must not be empty")
+    @NotBlank(message = "The firstname must not be empty")
     private String firstName;
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull(message = "The lastname must not be empty")
+    @NotEmpty(message = "The lastname must not be empty")
+    @NotBlank(message = "The lastname must not be empty")
     private String lastName;
-    @NotNull
-    @NotEmpty
-    @NotBlank
-    @Email
+    @NotNull(message = "The email must not be empty")
+    @NotEmpty(message = "The email must not be empty")
+    @NotBlank(message = "The email must not be empty")
+    @Email(message = "This email does not the right email")
     private String email;
-    @NotNull
-    @NotEmpty
-    @NotBlank
-    @Size(min = 8, max = 16)
-    private String password;
+    @NotNull(message = "The password must not be empty")
+    @NotEmpty(message = "The password must not be empty")
+    @NotBlank(message = "The password must not be empty")
+    @Size(min = 8, max = 16, message = "The password must be between 8 and 16 characters")
 
     @Past
     private LocalDateTime birthdate;
