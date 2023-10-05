@@ -22,7 +22,6 @@ import java.math.BigDecimal;
 @Builder
 public class TransactionDto implements Serializable {
     private Integer id;
-
     @Positive
     @Max(value = 100000000)
     @Min(value = 10)
