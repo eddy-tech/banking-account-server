@@ -10,15 +10,13 @@ name: banking-account cicd workflow
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches:
+      - master
 
 jobs:
-  build-deploy:
-    name: Build and Deploy Banking Account server
+  build:
+    name: Build and Deploy
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
@@ -30,13 +28,15 @@ jobs:
         distribution: 'corretto'
         cache: maven
 
-    - name: Unit Testing
-      run: mvn -B test --file pom.xml
-
     - name: Build with Maven
       run: |
         mvn clean install
         mvn -B package --file pom.xml
+
+    - name: Run tests
+      run: mvn -B test --file pom.xml
+
+
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
 #    - name: Update dependency graph
