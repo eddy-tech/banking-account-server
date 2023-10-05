@@ -36,6 +36,7 @@ public class UserDto implements Serializable {
     @NotEmpty(message = "The password must not be empty")
     @NotBlank(message = "The password must not be empty")
     @Size(min = 8, max = 16, message = "The password must be between 8 and 16 characters")
+    private String password;
 
     @Past
     private LocalDateTime birthdate;
