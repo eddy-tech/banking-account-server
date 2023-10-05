@@ -6,6 +6,7 @@ import com.java.bankingaccount.utils.TransactionType;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,6 @@ import java.math.BigDecimal;
 @Builder
 public class TransactionDto implements Serializable {
     private Integer id;
-
     @Positive
     @Max(value = 100000000)
     @Min(value = 10)
