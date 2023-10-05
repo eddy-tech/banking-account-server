@@ -24,7 +24,7 @@ public class AccountDto implements Serializable {
     private UserDto user;
 
 
-    private AccountDto fromAccount(Account account){
+    public static AccountDto fromAccount(Account account){
         return AccountDto.builder()
                 .id(account.getId())
                 .iban(account.getIban())
@@ -32,7 +32,8 @@ public class AccountDto implements Serializable {
                 .build();
     }
 
-    private Account toAccountDto(AccountDto account){
+    public static Account toAccountDto(AccountDto account){
+
         return Account.builder()
                 .id(account.getId())
                 .iban(account.getIban())
