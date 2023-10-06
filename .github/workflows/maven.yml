@@ -17,7 +17,7 @@ on:
 
 jobs:
   DEV:
-      name: Build App
+      name: Build and Testing
       runs-on: ubuntu-latest
       environment: DEV
       steps:
@@ -36,16 +36,16 @@ jobs:
                mvn clean install
                mvn -B package --file pom.xml
 
+        - name: Run tests
+          run: mvn -B test --file pom.xml
+
   QA:
-      name: Testing and Code Quality
+      name: Code Quality
       runs-on: ubuntu-latest
       environment: QA
       needs: DEV
       steps:
          - uses: actions/checkout@v3
-         - name: Run tests
-           run: mvn -B test --file pom.xml
-
          - name: SonarQube Scan
            uses: actions/cache@v1
            with:
