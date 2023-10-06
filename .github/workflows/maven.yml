@@ -36,6 +36,26 @@ jobs:
     - name: Run tests
       run: mvn -B test --file pom.xml
 
+    - name: SonarQube Scan
+      uses: actions/cache@v1
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+
+    - name: Cache maven package
+      uses: actions/cache@v1
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+
+    - name: Build and Analyze
+      env:
+        SONAR_ACCESS_TOKEN: ${{ secrets.SONAR_ACCESS_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=banking-account -Dsonar.projectName='banking-account'
+
     - name: Build Docker Image
       uses: docker/build-push-action@v3
       with:

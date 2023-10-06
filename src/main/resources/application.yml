@@ -9,3 +9,10 @@ spring:
       ddl-auto: update
     database: postgresql
     database-platform: org.hibernate.dialect.PostgresSQLDialect
+
+sonar:
+  projectKey: banking-account
+  projectName: banking-account
+  host.url: http://localhost:9000
+  login: admin
+  password: Password2023

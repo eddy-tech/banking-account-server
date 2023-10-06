@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +32,7 @@ public class AddressServiceImpl implements AddressService {
         return addressRepository.findAll()
                 .stream()
                 .map(AddressDto::fromAddress)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

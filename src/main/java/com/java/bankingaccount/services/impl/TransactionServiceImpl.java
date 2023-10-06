@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +36,7 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionRepository.findAll()
                 .stream()
                 .map(TransactionDto::fromTransaction)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -61,6 +60,6 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionRepository.findAllByUserId(userId)
                 .stream()
                 .map(TransactionDto::fromTransaction)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

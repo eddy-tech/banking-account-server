@@ -2,8 +2,6 @@ package com.java.bankingaccount.services.impl;
 
 import com.java.bankingaccount.dto.AccountDto;
 import com.java.bankingaccount.dto.UserDto;
-import com.java.bankingaccount.models.User;
-import com.java.bankingaccount.repositories.AccountRepository;
 import com.java.bankingaccount.repositories.UserRepository;
 import com.java.bankingaccount.services.AccountService;
 import com.java.bankingaccount.services.UserService;

@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -33,7 +32,7 @@ public class ContactServiceImpl implements ContactService {
         return contactRepository.findAll()
                 .stream()
                 .map(ContactDto::fromContact)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -55,6 +54,6 @@ public class ContactServiceImpl implements ContactService {
         return contactRepository.findAllByUserId(userId)
                 .stream()
                 .map(ContactDto::fromContact)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

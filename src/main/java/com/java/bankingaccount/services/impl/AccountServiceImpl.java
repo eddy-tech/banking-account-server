@@ -14,7 +14,6 @@ import org.iban4j.Iban;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
     public List<AccountDto> getAll() {
         return accountRepository.findAll().stream()
                 .map(AccountDto::fromAccount)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
