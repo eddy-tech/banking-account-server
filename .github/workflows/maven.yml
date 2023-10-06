@@ -73,7 +73,6 @@ jobs:
       environment: PROD
       needs: QA
       steps:
-        - uses: actions/checkout@v3
         - name: Build Docker Image
           uses: docker/build-push-action@v3
           with:
