@@ -7,6 +7,7 @@ This project is the backend application of banking account developed with Spring
 Before starting, Make sure that some tools are installed on your system : 
 - Java : ** version 17 + ([Télécharger Java](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html))
 - Maven at least 3.4 + Dependency management and building automatisation ([Télécharger Maven](https://maven.apache.org/download.cgi))
+- Docker for docker-compose file to build image of PostgreSQL Database and SonarQube for Code quality
 
   ## Installation
   1. **Clone Referentiel :**
