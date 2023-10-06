@@ -17,8 +17,7 @@ on:
 
 jobs:
   DEV:
-    build:
-      name: Build Maven
+      name: Build App
       runs-on: ubuntu-latest
       environment: DEV
       steps:
@@ -38,7 +37,6 @@ jobs:
                mvn -B package --file pom.xml
 
   QA:
-    build:
       name: Testing and Code Quality
       runs-on: ubuntu-latest
       environment: QA
@@ -70,7 +68,6 @@ jobs:
 #      if: success()
 
   PROD:
-    build:
       name: Deploy App
       runs-on: ubuntu-latest
       environment: PROD
@@ -98,8 +95,6 @@ jobs:
             dockerfile: Dockerfile
             push: true
             tags: ${{ secrets.DOCKER_HUB_USERNAME }}/banking-account-server:latest
-
-
 
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
