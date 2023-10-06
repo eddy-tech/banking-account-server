@@ -60,6 +60,20 @@ jobs:
              key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
              restore-keys: ${{ runner.os }}-m2
 
+         - name: Login to Docker Hub
+           uses: docker/login-action@v3
+           with:
+             username: ${{ secrets.DOCKER_HUB_USERNAME }}
+             password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+         - name: Build and Push Hub
+           uses: docker/build-push-action@v3
+           with:
+             context: .
+             file: ./Dockerfile
+             push: true
+             tags: ${{ secrets.DOCKER_HUB_USERNAME }}/banking-account-server:latest
+
 #    - name: Build and Analyze
 #      env:
 #        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -67,25 +81,13 @@ jobs:
 #      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 #      if: success()
 
-  PROD:
-      name: Deploy App
-      runs-on: ubuntu-latest
-      environment: PROD
-      needs: QA
-      steps:
-        - name: Login to Docker Hub
-          uses: docker/login-action@v3
-          with:
-            username: ${{ secrets.DOCKER_HUB_USERNAME }}
-            password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+#  PROD:
+#      name: Deploy App
+#      runs-on: ubuntu-latest
+#      environment: PROD
+#      needs: QA
+#      steps:
 
-        - name: Build and Push Hub
-          uses: docker/build-push-action@v3
-          with:
-            context: .
-            file: ./Dockerfile
-            push: true
-            tags: ${{ secrets.DOCKER_HUB_USERNAME }}/banking-account-server:latest
 
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
