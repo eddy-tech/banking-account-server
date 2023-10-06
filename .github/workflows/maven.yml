@@ -76,7 +76,7 @@ jobs:
         - name: Build Docker Image
           uses: docker/build-push-action@v3
           with:
-           context: .
+           context: ../../../.
            dockerfile: Dockerfile
            push: false
            tags: ${{ secrets.DOCKER_HUB_USERNAME }}/banking-account-server:latest
