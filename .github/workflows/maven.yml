@@ -73,25 +73,23 @@ jobs:
       environment: PROD
       needs: QA
       steps:
-        - name: Build Docker Image
-          uses: docker/build-push-action@v3
-          with:
-           context: ../../../.
-           dockerfile: Dockerfile
-           push: false
-           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/banking-account-server:latest
+        - name: Checkout
+          uses: actions/checkout@v4
 
         - name: Login to Docker Hub
-          uses: docker/login-action@v1
+          uses: docker/login-action@v3
           with:
             username: ${{ secrets.DOCKER_HUB_USERNAME }}
             password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-        - name: Push to Docker Hub
-          uses: docker/build-push-action@v2
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v3
+
+        - name: Build and Push Hub
+          uses: docker/build-push-action@v5
           with:
             context: .
-            dockerfile: Dockerfile
+            file: ./Dockerfile
             push: true
             tags: ${{ secrets.DOCKER_HUB_USERNAME }}/banking-account-server:latest
 
