@@ -54,7 +54,8 @@ jobs:
       env:
         SONAR_ACCESS_TOKEN: ${{ secrets.SONAR_ACCESS_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=banking-account -Dsonar.projectName='banking-account'
+      run: mvn -B verify sonar:sonar -Dsonar.projectKey=banking-account -Dsonar.projectName='banking-account'
+      if: success()
 
     - name: Build Docker Image
       uses: docker/build-push-action@v3
