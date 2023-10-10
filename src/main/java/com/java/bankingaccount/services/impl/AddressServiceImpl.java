@@ -19,11 +19,11 @@ public class AddressServiceImpl implements AddressService {
     private final ObjectsValidator<AddressDto> validator;
 
     @Override
-    public Integer save(AddressDto addressDto) {
+    public AddressDto save(AddressDto addressDto) {
         validator.validate(addressDto);
         var address = AddressDto.toAddressDto(addressDto);
 
-        return addressRepository.save(address).getId();
+        return AddressDto.fromAddress(addressRepository.save(address));
     }
 
     @Override

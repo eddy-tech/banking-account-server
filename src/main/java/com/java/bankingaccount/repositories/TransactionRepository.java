@@ -24,9 +24,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
     BigDecimal findHighestAmountByTransactionType(@Param("userId") Integer userId, @Param("transactionType") TransactionType type);
     @Query("select min(abs(t.amount)) as minAmount from Transaction t where t.user.id = :userId and t.type = :transactionType")
     BigDecimal findLowestAmountByTransactionType(@Param("userId") Integer userId, @Param("transactionType") TransactionType type);
-    @Query("select t.transactionDate as transactionDate, sum(t.amount) " +
-            "from Transaction t " +
-            "where t.user.id = :userId and t.createdDate between :start and :end " +
+    @Query("select t.transactionDate as transactionDate, sum(t.amount) as amount " +
+            "from Transaction t where t.user.id = :userId and t.createdDate between :start and :end " +
             "group by t.transactionDate")
-    List<TransactionSumDetails> findSumTransactionByDate(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end, Integer userId);
+    List<TransactionSumDetails> findSumTransactionByDate(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end, @Param("userId") Integer userId);
 }

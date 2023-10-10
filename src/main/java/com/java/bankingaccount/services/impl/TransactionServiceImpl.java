@@ -21,14 +21,14 @@ public class TransactionServiceImpl implements TransactionService {
     private final ObjectsValidator<TransactionDto> validator;
 
     @Override
-    public Integer save(TransactionDto transactionDto) {
+    public TransactionDto save(TransactionDto transactionDto) {
         validator.validate(transactionDto);
         var transaction = TransactionDto.toTransactionDto(transactionDto);
         var transactionMultiplier = getTransactionType(transaction.getType());
         var amount = transaction.getAmount().multiply(BigDecimal.valueOf(transactionMultiplier));
         transaction.setAmount(amount);
 
-        return transactionRepository.save(transaction).getId();
+        return TransactionDto.fromTransaction(transactionRepository.save(transaction));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     private int getTransactionType(TransactionType type){
-        return TransactionType.TRANSFER == type ? 1 : -1;
+        return TransactionType.DEPOSIT == type ? 1 : -1;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.java.bankingaccount.resources;
 
 import com.java.bankingaccount.dto.AccountDto;
 import com.java.bankingaccount.services.AccountService;
+import com.java.bankingaccount.utils.RootEntPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping(RootEntPoint.ROOT_ENDPOINT + "/accounts")
 @RequiredArgsConstructor
 public class AccountResource {
     private final AccountService accountService;
 
     @PostMapping("/")
-    public ResponseEntity<Integer> save(@RequestBody AccountDto dto) {
+    public ResponseEntity<AccountDto> save(@RequestBody AccountDto dto) {
         return ResponseEntity.ok(accountService.save(dto));
     }
 

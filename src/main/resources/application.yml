@@ -8,11 +8,11 @@ spring:
     hibernate:
       ddl-auto: update
     database: postgresql
-    database-platform: org.hibernate.dialect.PostgresSQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
-sonar:
-  projectKey: banking-account
-  projectName: banking-account
-  host.url: http://localhost:9000
-  login: admin
-  password: Password2023
+#sonar:
+#  projectKey: banking-account
+#  projectName: banking-account
+#  host.url: http://localhost:9000
+#  login: admin
+#  password: Password2023

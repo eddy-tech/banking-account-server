@@ -38,8 +38,6 @@ public class UserDto implements Serializable {
     @Size(min = 8, max = 16, message = "The password must be between 8 and 16 characters")
     private String password;
 
-    @Past
-    private LocalDateTime birthdate;
 
     public static UserDto fromUser(User user) {
         return UserDto.builder()
