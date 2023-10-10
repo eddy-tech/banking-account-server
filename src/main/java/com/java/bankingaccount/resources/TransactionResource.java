@@ -5,6 +5,7 @@ import com.java.bankingaccount.services.TransactionService;
 import com.java.bankingaccount.utils.RootEntPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping(RootEntPoint.ROOT_ENDPOINT + "/transactions")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class TransactionResource {
     private final TransactionService transactionService;
 

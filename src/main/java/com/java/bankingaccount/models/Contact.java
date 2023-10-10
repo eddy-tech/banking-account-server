@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 public class Contact extends AbstractEntity {
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String email;
     private String iban;
 

@@ -1,5 +1,7 @@
 package com.java.bankingaccount.models;
 
+import com.java.bankingaccount.enums.Roles;
+import com.java.bankingaccount.token.AccessToken;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,18 +35,29 @@ public class User extends AbstractEntity implements UserDetails {
     private List<Transaction> transactionList;
     @OneToMany(mappedBy = "user")
     private List<Contact> contactList;
+    @OneToMany(mappedBy = "user")
+    private List<AccessToken> accessTokenList;
     @OneToOne
     private Account account;
     @OneToOne
     private Role role;
+    private Roles roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(role.getName()));
+        Collection<SimpleGrantedAuthority> authorities = new java.util.ArrayList<>(roles.getPermissions()
+                .stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+                .toList());
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+
+        return authorities;
     }
 
     @Override
     public String getUsername() { return email; }
+    @Override
+    public String getPassword() { return password; }
 
     @Override
     public boolean isAccountNonExpired() {

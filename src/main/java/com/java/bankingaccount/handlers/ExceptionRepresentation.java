@@ -7,10 +7,10 @@ import lombok.Getter;
 
 import java.util.Set;
 
+@Getter
 @Builder
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@Getter
 public class ExceptionRepresentation {
     private String errorMessage;
     private String errorSource;

@@ -15,7 +15,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("from User where firstName = ?1")
     List<User> getAllUsersByFirstName(String firstName);
 
-
     @Query("from User u inner join Account a on u.id = a.user.id and a.iban = ?1")
     List<User> findAllByAccountIban(String iban);
 

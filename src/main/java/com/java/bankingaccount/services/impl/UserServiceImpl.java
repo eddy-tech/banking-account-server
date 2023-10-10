@@ -1,7 +1,9 @@
 package com.java.bankingaccount.services.impl;
 
+import com.java.bankingaccount.auth.ChangePasswordRequest;
 import com.java.bankingaccount.dto.AccountDto;
 import com.java.bankingaccount.dto.UserDto;
+import com.java.bankingaccount.models.User;
 import com.java.bankingaccount.repositories.UserRepository;
 import com.java.bankingaccount.services.AccountService;
 import com.java.bankingaccount.services.UserService;
@@ -9,14 +11,18 @@ import com.java.bankingaccount.validators.ObjectsValidator;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final AccountService accountService;
     private final ObjectsValidator<UserDto> validator;
@@ -73,5 +79,21 @@ public class UserServiceImpl implements UserService {
         user.setActive(false);
         userRepository.save(user);
         return user.getId();
+    }
+
+    @Override
+    public void changePassword(ChangePasswordRequest request, Principal connectedUser) {
+        var user = (User)((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+        if(!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())){
+            throw new IllegalStateException("Wrong Password");
+        }
+
+        if(!request.getNewPassword().equals(request.getConfirmationPassword())){
+            throw new IllegalStateException("Both password are not the same");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
     }
 }
