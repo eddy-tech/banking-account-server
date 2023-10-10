@@ -22,11 +22,11 @@ public class UserServiceImpl implements UserService {
     private final ObjectsValidator<UserDto> validator;
 
     @Override
-    public Integer save(UserDto userDto) {
+    public UserDto save(UserDto userDto) {
         validator.validate(userDto);
         var user = UserDto.toUserDto(userDto);
 
-        return userRepository.save(user).getId();
+        return UserDto.fromUser(userRepository.save(user));
     }
 
     @Override
@@ -52,11 +52,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer validateAccount(Integer id) {
-        var user = userRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("No user was found for user account validation"));
+        var user = userRepository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException("No user was found for user account validation"));
+
         var account = AccountDto.builder()
                 .user(UserDto.fromUser(user))
                 .build();
          accountService.save(account);
+
          user.setActive(true);
          userRepository.save(user);
          return user.getId();
@@ -64,7 +67,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer invalidateAccount(Integer id) {
-        var user = userRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("No user was found for user account validation"));
+        var user = userRepository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException("No user was found for user account validation"));
+
         user.setActive(false);
         userRepository.save(user);
         return user.getId();

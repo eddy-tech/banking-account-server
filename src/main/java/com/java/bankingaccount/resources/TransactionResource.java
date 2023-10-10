@@ -2,6 +2,7 @@ package com.java.bankingaccount.resources;
 
 import com.java.bankingaccount.dto.TransactionDto;
 import com.java.bankingaccount.services.TransactionService;
+import com.java.bankingaccount.utils.RootEntPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/transactions")
+@RequestMapping(RootEntPoint.ROOT_ENDPOINT + "/transactions")
 @RequiredArgsConstructor
 public class TransactionResource {
     private final TransactionService transactionService;
 
     @PostMapping("/")
-    public ResponseEntity<Integer> save(@RequestBody TransactionDto dto) {
+    public ResponseEntity<TransactionDto> save(@RequestBody TransactionDto dto) {
         return ResponseEntity.ok(transactionService.save(dto));
     }
 

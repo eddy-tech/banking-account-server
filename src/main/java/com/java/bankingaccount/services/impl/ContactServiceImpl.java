@@ -19,11 +19,11 @@ public class ContactServiceImpl implements ContactService {
     private final ContactRepository contactRepository;
     private final ObjectsValidator<ContactDto> validator;
     @Override
-    public Integer save(ContactDto contactDto) {
+    public ContactDto save(ContactDto contactDto) {
         validator.validate(contactDto);
         var contact = ContactDto.toContactDto(contactDto);
 
-        return contactRepository.save(contact).getId();
+        return ContactDto.fromContact(contactRepository.save(contact));
     }
 
     @Override

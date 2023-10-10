@@ -23,16 +23,16 @@ public class AccountServiceImpl implements AccountService {
     private final ObjectsValidator<AccountDto> validator;
 
     @Override
-    public Integer save(AccountDto accountDto) {
-        if(accountDto.getId() != null){
-            throw new OperationNoPermittedException(
-                    "Cannot be updated", "save Account", "Account", "Updated not permitted"
-            );
-        }
+    public AccountDto save(AccountDto accountDto) {
+//        if(accountDto.getId() != null){
+//            throw new OperationNoPermittedException(
+//                    "Cannot be updated", "save Account", "Account", "Updated not permitted"
+//            );
+//        }
         validator.validate(accountDto);
         Account account = AccountDto.toAccountDto(accountDto);
-        var isUserAlreadyAccount = accountRepository.findByUserId(account.getId()).isPresent();
-        if(isUserAlreadyAccount && account.getUser().isActive()){
+        var userHasAlreadyAccount = accountRepository.findByUserId(account.getUser().getId()).isPresent();
+        if(userHasAlreadyAccount && account.getUser().isActive()){
             throw new OperationNoPermittedException(
                 "The selected user has already an active account",
                 "Create account",
@@ -40,9 +40,12 @@ public class AccountServiceImpl implements AccountService {
                 "Account creating"
             );
         }
-        account.setIban(generateRandomIban());
+        if(accountDto.getId() == null){
+            account.setIban(generateRandomIban());
+        }
 
-        return accountRepository.save(account).getId();
+        var accountSave = accountRepository.save(account);
+        return AccountDto.fromAccount(accountSave);
     }
 
     @Override

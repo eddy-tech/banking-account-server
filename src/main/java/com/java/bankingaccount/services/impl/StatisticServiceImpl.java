@@ -6,6 +6,7 @@ import com.java.bankingaccount.services.StatisticService;
 import com.java.bankingaccount.utils.TransactionType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,13 +18,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class StatisticServiceImpl implements StatisticService {
     private final TransactionRepository transactionRepository;
   
     @Override
     public List<TransactionSumDetails> findSumTransactionByDate(LocalDate startDate, LocalDate endDate, Integer userId) {
         LocalDateTime start = LocalDateTime.of(startDate, LocalTime.of(0,0,0));
-        LocalDateTime end = LocalDateTime.of(endDate, LocalTime.of(0,0,0));
+        LocalDateTime end = LocalDateTime.of(endDate, LocalTime.of(23,59,59));
 
         return transactionRepository.findSumTransactionByDate(start, end, userId);
     }
