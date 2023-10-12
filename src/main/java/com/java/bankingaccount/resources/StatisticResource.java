@@ -16,11 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping(RootEntPoint.ROOT_ENDPOINT + "/statistics")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 public class StatisticResource {
     private final StatisticService statisticService;
 
     @GetMapping("/sum-by-date/{userId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
     public ResponseEntity<List<TransactionSumDetails>> findSumTransactionByDate(
             @RequestParam(name = "start-date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(name = "end-date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
@@ -29,16 +29,19 @@ public class StatisticResource {
     }
 
     @GetMapping("/account-balance/{userId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
     public ResponseEntity<BigDecimal> getAccountBalance(@PathVariable(name = "userId") Integer userId) {
         return ResponseEntity.ok(statisticService.getAccountBalance(userId));
     }
 
     @GetMapping("/highest-transfer/{userId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
     public ResponseEntity<BigDecimal> highestTransfer(@PathVariable(name = "userId") Integer userId) {
         return ResponseEntity.ok(statisticService.highestTransfer(userId));
     }
 
     @GetMapping("/highest-deposit/{userId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
     public ResponseEntity<BigDecimal> highestDeposit(@PathVariable(name = "userId") Integer userId) {
         return ResponseEntity.ok(statisticService.highestDeposit(userId));
     }

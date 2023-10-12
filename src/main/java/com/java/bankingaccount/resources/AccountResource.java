@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping(RootEntPoint.ROOT_ENDPOINT + "/accounts")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AccountResource {
     private final AccountService accountService;
 
@@ -34,21 +33,25 @@ public class AccountResource {
             }
     )
     @PostMapping("/")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<AccountDto> save(@RequestBody AccountDto dto) {
         return ResponseEntity.ok(accountService.save(dto));
     }
 
     @GetMapping("/")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<AccountDto>> getAll() {
         return ResponseEntity.ok(accountService.getAll());
     }
 
     @GetMapping("/{accountId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<AccountDto> getById(@PathVariable(name = "accountId") Integer id) {
         return ResponseEntity.ok(accountService.getById(id));
     }
 
     @DeleteMapping("/{accountId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable(name = "accountId")Integer id) {
         accountService.delete(id);
         return ResponseEntity.accepted().build();

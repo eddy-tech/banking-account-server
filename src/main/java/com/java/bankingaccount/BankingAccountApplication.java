@@ -18,4 +18,30 @@ public class BankingAccountApplication {
 		SpringApplication.run(BankingAccountApplication.class, args);
 	}
 
+	@Bean
+	public CommandLineRunner commandLineRunner(
+			AuthenticationService service
+	) {
+		return args -> {
+			var admin = UserDto.builder()
+					.firstName("Admin")
+					.lastName("Admin")
+					.email("admin@mail.com")
+					.password("password")
+					.roles(ADMIN)
+					.build();
+			System.out.println("Admin token: " + service.register(admin).getAccessToken());
+
+			var manager = UserDto.builder()
+					.firstName("Admin")
+					.lastName("Admin")
+					.email("manager@mail.com")
+					.password("password")
+					.roles(USER)
+					.build();
+			System.out.println("Manager token: " + service.register(manager).getAccessToken());
+
+		};
+	}
+
 }

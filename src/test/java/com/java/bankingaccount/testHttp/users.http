@@ -1,0 +1,54 @@
+### Register User
+POST http://localhost:8080/api/v1/root/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Ali",
+  "lastName": "Bouali",
+  "email":  "alibou@mail.com",
+  "password": "password",
+  "roles":  "ADMIN"
+}
+
+> {% client.global.set("auth-token", response.body.access_token);  %}
+
+###Get a users
+GET http://localhost:8080/api/v1/root/users/
+Authorization: Bearer {{auth-token}}
+
+###Get all transactions
+GET http://localhost:8080/api/v1/root/transactions/
+Authorization: Bearer {{auth-token}}
+
+
+###Get activate users
+GET http://localhost:8080/api/v1/root/users/validate/2
+Authorization: Bearer {{auth-token}}
+
+
+### Change the password
+PATCH http://localhost:8080/api/v1/root/users/change-password
+Content-Type: application/json
+Authorization: Bearer {{auth-token}}
+
+{
+  "currentPassword": "password",
+  "newPassword": "newPassword",
+  "confirmationPassword":  "newPassword"
+}
+
+### Login again and update the token
+POST http://localhost:8080/api/v1/root/auth/authenticate
+Content-Type: application/json
+
+{
+  "email":  "alibou@mail.com",
+  "password": "newPassword"
+}
+
+> {% client.global.set("new-auth-token", response.body.access_token);  %}
+
+
+### Query the Demo endpoint after password change
+GET http://localhost:8080/api/v1/root/users/
+Authorization: Bearer {{new-auth-token}}
