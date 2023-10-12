@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping(RootEntPoint.ROOT_ENDPOINT + "/accounts")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AccountResource {
     private final AccountService accountService;
 

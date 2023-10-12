@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -25,6 +26,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfig {
     private static final String[] ENDPOINT_LIST = {
             "/api/v1/root/auth/**",
+            ROOT_ENDPOINT + "/**",
             "/v2/api-docs",
             "/v2/api-docs/**",
             "/v3/api-docs",
@@ -45,15 +47,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .cors(CorsConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(
                                 ENDPOINT_LIST
                         )
                                 .permitAll()
-                                .requestMatchers(ROOT_ENDPOINT + "/users/**").hasAnyRole(ADMIN.name())                               .requestMatchers(ROOT_ENDPOINT + "/transactions/**").hasAnyAuthority(USER.name(), ADMIN.name())
-                                .requestMatchers(ROOT_ENDPOINT + "/contacts/**").hasAnyRole(ADMIN.name())
-                                .requestMatchers(ROOT_ENDPOINT + "/accounts/**").hasAnyRole(ADMIN.name())
+                                .requestMatchers(ROOT_ENDPOINT + "/users/**").hasRole(ADMIN.name())                               .requestMatchers(ROOT_ENDPOINT + "/transactions/**").hasAnyAuthority(USER.name(), ADMIN.name())
+                                .requestMatchers(ROOT_ENDPOINT + "/contacts/**").hasRole(ADMIN.name())
+                                .requestMatchers(ROOT_ENDPOINT + "/accounts/**").hasRole(ADMIN.name())
                                 .requestMatchers(ROOT_ENDPOINT + "/address/**").hasAnyRole(ADMIN.name(), USER.name())
                                 .anyRequest()
                                 .authenticated()
