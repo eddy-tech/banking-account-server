@@ -1,6 +1,6 @@
 package com.java.bankingaccount.repositories;
 
-import com.java.bankingaccount.token.AccessToken;
+import com.java.bankingaccount.models.token.AccessToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -1,18 +1,16 @@
 package com.java.bankingaccount.models;
 
 import com.java.bankingaccount.enums.Roles;
-import com.java.bankingaccount.token.AccessToken;
+import com.java.bankingaccount.models.token.AccessToken;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -39,19 +37,12 @@ public class User extends AbstractEntity implements UserDetails {
     private List<AccessToken> accessTokenList;
     @OneToOne
     private Account account;
-    @OneToOne
-    private Role role;
+    @Enumerated(EnumType.STRING)
     private Roles roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<SimpleGrantedAuthority> authorities = new java.util.ArrayList<>(roles.getPermissions()
-                .stream()
-                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
-                .toList());
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-
-        return authorities;
+        return roles.getAuthorities();
     }
 
     @Override

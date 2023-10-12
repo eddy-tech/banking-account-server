@@ -3,6 +3,8 @@ package com.java.bankingaccount.resources;
 import com.java.bankingaccount.dto.AccountDto;
 import com.java.bankingaccount.services.AccountService;
 import com.java.bankingaccount.utils.RootEntPoint;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +19,20 @@ import java.util.List;
 public class AccountResource {
     private final AccountService accountService;
 
+    @Operation(
+            description = "Get endpoint for Admin",
+            summary = "This is a summary for account endpoint",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized/ Invalid token",
+                            responseCode = "403"
+                    )
+            }
+    )
     @PostMapping("/")
     public ResponseEntity<AccountDto> save(@RequestBody AccountDto dto) {
         return ResponseEntity.ok(accountService.save(dto));

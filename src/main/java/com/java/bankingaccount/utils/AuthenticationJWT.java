@@ -2,11 +2,8 @@ package com.java.bankingaccount.utils;
 
 import com.java.bankingaccount.enums.Roles;
 
-public interface AuthenticationJWT {
-      String AUTHORIZATION = "Authorization";
-      String BEARER = "Bearer ";
-      Integer SUB_STRING = 7;
-      String ROLE_USER = "ROLE_" + Roles.USER.name();
-      String ROLE_ADMIN = "ADMIN_" + Roles.ADMIN.name();
-
+public abstract class AuthenticationJWT {
+      public static final String AUTHORIZATION = "Authorization";
+      public static final String BEARER = "Bearer ";
+      public static final Integer SUB_STRING = 7;
 }

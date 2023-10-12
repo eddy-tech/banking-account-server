@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping(RootEntPoint.ROOT_ENDPOINT + "/transactions")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 public class TransactionResource {
     private final TransactionService transactionService;
 

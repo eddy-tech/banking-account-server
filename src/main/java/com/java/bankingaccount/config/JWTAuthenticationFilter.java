@@ -23,8 +23,8 @@ import static com.java.bankingaccount.utils.AuthenticationJWT.*;
 @Component
 @RequiredArgsConstructor
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
-    private final UserDetailsService userDetailsService;
     private final JwtService jwtService;
+    private final UserDetailsService userDetailsService;
     private final AccessTokenRepository accessTokenRepository;
     @Override
     protected void doFilterInternal(
@@ -42,7 +42,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(SUB_STRING);
         userEmail = jwtService.extractUsername(jwt);
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            var userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
             var isAccessTokenValid = accessTokenRepository.findByAccessToken(jwt)
                     .map(token-> !token.isExpired()&& !token.isRevoked())
                     .orElse(false);

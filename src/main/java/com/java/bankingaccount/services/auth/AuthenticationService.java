@@ -3,16 +3,12 @@ package com.java.bankingaccount.services.auth;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java.bankingaccount.auth.LoginRequest;
 import com.java.bankingaccount.auth.AuthenticationResponse;
-import com.java.bankingaccount.dto.AccountDto;
 import com.java.bankingaccount.dto.UserDto;
-import com.java.bankingaccount.enums.Roles;
 import com.java.bankingaccount.enums.TokenType;
-import com.java.bankingaccount.models.Role;
 import com.java.bankingaccount.models.User;
 import com.java.bankingaccount.repositories.AccessTokenRepository;
-import com.java.bankingaccount.repositories.RoleRepository;
 import com.java.bankingaccount.repositories.UserRepository;
-import com.java.bankingaccount.token.AccessToken;
+import com.java.bankingaccount.models.token.AccessToken;
 import com.java.bankingaccount.validators.ObjectsValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,16 +34,12 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final AccessTokenRepository tokenRepository;
-    private final RoleRepository roleRepository;
     private final ObjectsValidator<UserDto> validator;
 
     public AuthenticationResponse register(UserDto userDto) {
         validator.validate(userDto);
         var user = UserDto.toUserDto(userDto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(
-                findOrCreateRole(ROLE_USER)
-        );
 
         var saveUser = userRepository.save(user);
         var accessToken = jwtService.generateToken(user);
@@ -86,7 +78,7 @@ public class AuthenticationService {
         userEmail = jwtService.extractUsername(refreshToken);
         if(userEmail != null){
             var user = this.userRepository.findUserByEmail(userEmail)
-                    .orElseThrow();
+                    .orElseThrow(()-> new UsernameNotFoundException(String.format("User %s was not found", userEmail)));
 
             if(jwtService.isTokenValid(refreshToken, user)){
                 var accessToken = jwtService.generateToken(user);
@@ -128,20 +120,5 @@ public class AuthenticationService {
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .build();
-    }
-
-    private Role findOrCreateRole(String roleName) {
-        Role role = roleRepository.findByName(roleName)
-                .orElse(null);
-
-        if(role == null){
-            return roleRepository.save(
-                    Role.builder()
-                            .name(roleName)
-                            .build()
-            );
-        }
-
-        return role;
     }
 }

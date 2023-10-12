@@ -25,10 +25,20 @@ public enum Roles {
 
     USER(
             Set.of(
-                    USER_CREATE, USER_CREATE, USER_CREATE, USER_CREATE
+                    USER_CREATE, USER_DELETE, USER_UPDATE, USER_READ
             )
     );
 
     @Getter
     private final Set<Permission> permissions;
+
+    public List<SimpleGrantedAuthority> getAuthorities(){
+        List<SimpleGrantedAuthority> authorities = getPermissions()
+                .stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+                .collect(Collectors.toList());
+
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+        return authorities;
+    }
 }

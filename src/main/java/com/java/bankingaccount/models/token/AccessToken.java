@@ -1,18 +1,17 @@
-package com.java.bankingaccount.token;
+package com.java.bankingaccount.models.token;
 
 import com.java.bankingaccount.enums.TokenType;
-import com.java.bankingaccount.models.AbstractEntity;
 import com.java.bankingaccount.models.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
 @AllArgsConstructor @NoArgsConstructor
-@Builder
+@SuperBuilder
 public class AccessToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

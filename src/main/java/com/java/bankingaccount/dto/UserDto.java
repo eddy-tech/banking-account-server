@@ -1,5 +1,6 @@
 package com.java.bankingaccount.dto;
 
+import com.java.bankingaccount.enums.Roles;
 import com.java.bankingaccount.models.User;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,7 @@ public class UserDto implements Serializable {
     @NotBlank(message = "The password must not be empty")
     @Size(min = 8, max = 16, message = "The password must be between 8 and 16 characters")
     private String password;
+    private Roles roles;
 
     public static UserDto fromUser(User user) {
         return UserDto.builder()
@@ -43,6 +45,7 @@ public class UserDto implements Serializable {
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .password(user.getPassword())
+                .roles(user.getRoles())
                 .build();
     }
 
@@ -53,6 +56,7 @@ public class UserDto implements Serializable {
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .password(user.getPassword())
+                .roles(user.getRoles())
                 .build();
     }
 }

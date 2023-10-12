@@ -22,7 +22,7 @@ public class JwtService {
     private String secretKey;
     @Value("${spring.application.security.jwt.expiration}")
     private long jwtExpiration;
-    @Value("${REFRESH_TOKEN_EXPIRATION}")
+    @Value("${spring.application.security.jwt.refresh-token.expiration}")
     private long refreshExpiration;
 
     public String extractUsername(String token){ return extractClaim(token, Claims::getSubject); }
@@ -32,11 +32,17 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails){ return tokenGenerated(new HashMap<>(), userDetails);}
+    public String generateToken(UserDetails userDetails){
+        return tokenGenerated(new HashMap<>(), userDetails);
+    }
 
-    public String tokenGenerated(Map<String, Object> extraClaims, UserDetails userDetails){ return buildAccessToken(extraClaims, userDetails, jwtExpiration); }
+    public String tokenGenerated(Map<String, Object> extraClaims, UserDetails userDetails){
+        return buildAccessToken(extraClaims, userDetails, jwtExpiration);
+    }
 
-    public String generateRefreshToken(UserDetails userDetails) { return buildAccessToken(new HashMap<>(), userDetails, refreshExpiration); }
+    public String generateRefreshToken(UserDetails userDetails) {
+        return buildAccessToken(new HashMap<>(), userDetails, refreshExpiration);
+    }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);

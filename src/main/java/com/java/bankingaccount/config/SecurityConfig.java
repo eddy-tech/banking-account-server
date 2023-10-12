@@ -1,7 +1,6 @@
 package com.java.bankingaccount.config;
 
 import com.java.bankingaccount.services.auth.LogoutService;
-import com.java.bankingaccount.utils.RootEntPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,15 +9,14 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static com.java.bankingaccount.enums.Roles.*;
 import static com.java.bankingaccount.roots.AuthenticationEndPoint.LOGOUT_ENDPOINT;
-import static com.java.bankingaccount.utils.AuthenticationJWT.ROLE_ADMIN;
-import static com.java.bankingaccount.utils.AuthenticationJWT.ROLE_USER;
 import static com.java.bankingaccount.utils.RootEntPoint.ROOT_ENDPOINT;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
 @EnableWebSecurity
@@ -26,8 +24,7 @@ import static com.java.bankingaccount.utils.RootEntPoint.ROOT_ENDPOINT;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     private static final String[] ENDPOINT_LIST = {
-            "/**/authenticate",
-            "/**/register",
+            "/api/v1/root/auth/**",
             "/v2/api-docs",
             "/v2/api-docs/**",
             "/v3/api-docs",
@@ -54,16 +51,15 @@ public class SecurityConfig {
                                 ENDPOINT_LIST
                         )
                                 .permitAll()
-                                .requestMatchers(ROOT_ENDPOINT + "/**").hasAnyRole(ROLE_ADMIN)
-                                .requestMatchers(ROOT_ENDPOINT + "/users").hasAnyAuthority(ROLE_USER, ROLE_ADMIN)
-                                .requestMatchers(ROOT_ENDPOINT + "/transactions").hasAnyAuthority(ROLE_USER, ROLE_ADMIN)
-                                .requestMatchers(ROOT_ENDPOINT + "/contacts").hasAnyAuthority(ROLE_ADMIN)
-                                .requestMatchers(ROOT_ENDPOINT + "/accounts").hasAnyAuthority(ROLE_ADMIN)
+                                .requestMatchers(ROOT_ENDPOINT + "/users/**").hasAnyRole(ADMIN.name())                               .requestMatchers(ROOT_ENDPOINT + "/transactions/**").hasAnyAuthority(USER.name(), ADMIN.name())
+                                .requestMatchers(ROOT_ENDPOINT + "/contacts/**").hasAnyRole(ADMIN.name())
+                                .requestMatchers(ROOT_ENDPOINT + "/accounts/**").hasAnyRole(ADMIN.name())
+                                .requestMatchers(ROOT_ENDPOINT + "/address/**").hasAnyRole(ADMIN.name(), USER.name())
                                 .anyRequest()
                                 .authenticated()
                 )
                 .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        session.sessionCreationPolicy(STATELESS)
                 )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
