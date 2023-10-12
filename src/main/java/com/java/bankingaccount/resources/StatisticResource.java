@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping(RootEntPoint.ROOT_ENDPOINT + "/statistics")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 public class StatisticResource {
     private final StatisticService statisticService;
 

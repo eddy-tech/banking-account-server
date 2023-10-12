@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping(RootEntPoint.ROOT_ENDPOINT + "/addresses")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 public class AddressResource {
     private final AddressService addressService;
 

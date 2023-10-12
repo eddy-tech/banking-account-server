@@ -31,4 +31,14 @@ public class AbstractEntity {
     @LastModifiedDate
     @Column(insertable = false)
     private LocalDateTime lastModifiedDate;
+    @CreatedBy
+    @Column(
+            nullable = false,
+            updatable = false
+    )
+    private Integer createdBy;
+
+    @LastModifiedBy
+    @Column(insertable = false)
+    private Integer lastModifiedBy;
 }
