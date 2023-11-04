@@ -6,12 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
+
 @Data
 @SuperBuilder
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Contact extends AbstractEntity {
+public class Contact extends AbstractEntity implements Serializable {
     private String firstName;
     private String lastName;
     @Column(unique = true)

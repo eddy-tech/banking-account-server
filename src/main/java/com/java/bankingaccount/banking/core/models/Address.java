@@ -6,12 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Data
 @SuperBuilder
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Address extends AbstractEntity {
+public class Address extends AbstractEntity implements Serializable {
     private String street;
     private Integer houseNumber;
     private Integer zipCode;

@@ -18,6 +18,7 @@ import java.util.Map;
 
 import static com.java.bankingaccount.banking.account.roots.AccountEndPoint.ACCOUNT_ENDPOINT;
 import static com.java.bankingaccount.banking.account.roots.AccountEndPoint.ACCOUNT_ID_ENDPOINT;
+import static com.java.bankingaccount.core.utils.RoleUtils.ADMIN;
 import static com.java.bankingaccount.core.utils.RootEntPoint.ROOT_ENDPOINT;
 import static org.springframework.http.HttpStatus.*;
 
@@ -42,7 +43,7 @@ public class AccountResource {
             }
     )
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<HttpResponse> save(@RequestBody AccountDto dto) {
         var newAccount = accountService.save(dto);
         return ResponseEntity.created(URI.create("")).body(
@@ -57,13 +58,13 @@ public class AccountResource {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<List<AccountDto>> getAll() {
         return ResponseEntity.ok(accountService.getAll());
     }
 
     @GetMapping(ACCOUNT_ID_ENDPOINT)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<HttpResponse> getById(@PathVariable(name = "accountId") Integer id) {
         var account = accountService.getById(id);
         return ResponseEntity.ok().body(
@@ -78,7 +79,7 @@ public class AccountResource {
     }
 
     @DeleteMapping(ACCOUNT_ID_ENDPOINT)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<HttpResponse> delete(@PathVariable(name = "accountId")Integer id) {
         accountService.delete(id);
         return ResponseEntity.accepted().body(

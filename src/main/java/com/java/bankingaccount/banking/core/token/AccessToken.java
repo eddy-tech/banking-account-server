@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor @NoArgsConstructor
 @SuperBuilder
 public class AccessToken extends AbstractEntity {
+    @Column(length = 512)
     private String accessToken;
     @Enumerated(EnumType.ORDINAL)
     private TokenType tokenType;

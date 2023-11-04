@@ -1,4 +1,4 @@
-package com.java.bankingaccount.banking.authentication.services.impl;
+package com.java.bankingaccount.banking.authentication.services.mail;
 
 import com.java.bankingaccount.banking.authentication.services.interfaces.EmailService;
 

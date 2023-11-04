@@ -1,6 +1,6 @@
 package com.java.bankingaccount.banking.user.service;
 
-import com.java.bankingaccount.banking.authentication.auth.ChangePasswordRequest;
+import com.java.bankingaccount.banking.core.auth.ChangePasswordRequest;
 import com.java.bankingaccount.banking.account.dto.AccountDto;
 import com.java.bankingaccount.banking.user.dto.UserDto;
 import com.java.bankingaccount.banking.core.models.User;

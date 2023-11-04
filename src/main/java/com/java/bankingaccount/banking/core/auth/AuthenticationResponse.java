@@ -1,4 +1,4 @@
-package com.java.bankingaccount.banking.authentication.auth;
+package com.java.bankingaccount.banking.core.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

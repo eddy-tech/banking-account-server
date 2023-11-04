@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.java.bankingaccount.banking.contact.roots.ContactEndpoint.*;
+import static com.java.bankingaccount.core.utils.RoleUtils.ADMIN;
 import static com.java.bankingaccount.core.utils.RootEntPoint.ROOT_ENDPOINT;
 import static org.springframework.http.HttpStatus.ACCEPTED;
 
@@ -26,7 +27,7 @@ public class ContactResource {
     private final ContactService contactService;
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<HttpResponse> save(@RequestBody ContactDto dto) {
         var newContact = contactService.save(dto);
         return ResponseEntity.created(URI.create("")).body(
@@ -41,13 +42,13 @@ public class ContactResource {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<List<ContactDto>> getAll() {
         return ResponseEntity.ok(contactService.getAll());
     }
 
     @GetMapping(CONTACT_ID_ENDPOINT)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<HttpResponse> getById(@PathVariable(name = "contactId") Integer id) {
         var contact = contactService.getById(id);
         return ResponseEntity.ok().body(
@@ -62,13 +63,13 @@ public class ContactResource {
     }
 
     @GetMapping(CONTACT_USER_ENDPOINT)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<List<ContactDto>> findAllByUserId(@PathVariable(name = "userId") Integer userId) {
         return ResponseEntity.ok(contactService.findAllByUserId(userId));
     }
 
     @DeleteMapping(CONTACT_ID_ENDPOINT)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<HttpResponse> delete(@PathVariable(name = "contactId")Integer id) {
         contactService.delete(id);
         return ResponseEntity.accepted().body(

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.java.bankingaccount.banking.transaction.roots.TransactionEndpoint.*;
+import static com.java.bankingaccount.core.utils.RoleUtils.ADMIN_USER;
 import static com.java.bankingaccount.core.utils.RootEntPoint.ROOT_ENDPOINT;
 import static org.springframework.http.HttpStatus.ACCEPTED;
 
@@ -25,7 +26,7 @@ public class TransactionResource {
     private final TransactionService transactionService;
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize(ADMIN_USER)
     public ResponseEntity<HttpResponse> save(@RequestBody TransactionDto dto) {
         var newTransaction = transactionService.save(dto);
         return ResponseEntity.ok().body(
@@ -40,13 +41,13 @@ public class TransactionResource {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize(ADMIN_USER)
     public ResponseEntity<List<TransactionDto>> getAll() {
         return ResponseEntity.ok(transactionService.getAll());
     }
 
     @GetMapping(TRANSACTION_ID_ENDPOINT)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize(ADMIN_USER)
     public ResponseEntity<HttpResponse> getById(@PathVariable(name = "transactionId") Integer id) {
         var transaction = transactionService.getById(id);
         return ResponseEntity.ok().body(
@@ -61,13 +62,13 @@ public class TransactionResource {
     }
 
     @GetMapping(TRANSACTION_USER_ENDPOINT)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize(ADMIN_USER)
     public ResponseEntity<List<TransactionDto>> findAllByUser(@PathVariable(name = "userId") Integer userId) {
         return ResponseEntity.ok(transactionService.findAllByUser(userId));
     }
 
     @DeleteMapping(TRANSACTION_ID_ENDPOINT)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize(ADMIN_USER)
     public ResponseEntity<HttpResponse> delete(@PathVariable(name = "transactionId")Integer id) {
         transactionService.delete(id);
         return ResponseEntity.accepted().body(
