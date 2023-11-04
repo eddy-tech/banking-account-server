@@ -1,13 +1,11 @@
 package com.java.bankingaccount.integration.repositories;
 
 import com.java.bankingaccount.integration.AbstractionContainerBaseTest;
-import com.java.bankingaccount.models.Transaction;
-import com.java.bankingaccount.models.User;
-import com.java.bankingaccount.projections.TransactionSumDetails;
-import com.java.bankingaccount.repositories.TransactionRepository;
-import com.java.bankingaccount.repositories.UserRepository;
-import com.java.bankingaccount.utils.TransactionType;
-import jakarta.validation.constraints.NotNull;
+import com.java.bankingaccount.banking.core.models.Transaction;
+import com.java.bankingaccount.banking.core.models.User;
+import com.java.bankingaccount.banking.transaction.repository.TransactionRepository;
+import com.java.bankingaccount.banking.user.repository.UserRepository;
+import com.java.bankingaccount.core.utils.TransactionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest

@@ -1,9 +1,9 @@
 package com.java.bankingaccount.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.java.bankingaccount.dto.UserDto;
-import com.java.bankingaccount.resources.UserResource;
-import com.java.bankingaccount.services.impl.UserServiceImpl;
+import com.java.bankingaccount.banking.user.dto.UserDto;
+import com.java.bankingaccount.banking.user.resource.UserResource;
+import com.java.bankingaccount.banking.user.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -51,7 +51,7 @@ class UserResourceTest {
     }
 
     @Test
-    void givenUserDtoObject_whenCreateUser_thenReturnUserObject200() throws Exception {
+    void givenUserDtoObject_whenCreateUser_thenReturnUserObject202() throws Exception {
         given(userService.save(any(UserDto.class)))
                 .willReturn(userDto);
 
@@ -62,7 +62,7 @@ class UserResourceTest {
                 );
 
         resultActions.andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstName", is(userDto.getFirstName())))
                 .andExpect(jsonPath("$.lastName", is(userDto.getLastName())))
                 .andExpect(jsonPath("$.email", is(userDto.getEmail())))
