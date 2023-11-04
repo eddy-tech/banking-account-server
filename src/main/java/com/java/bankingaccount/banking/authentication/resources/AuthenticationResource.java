@@ -1,6 +1,6 @@
 package com.java.bankingaccount.banking.authentication.resources;
 
-import com.java.bankingaccount.banking.authentication.auth.LoginRequest;
+import com.java.bankingaccount.banking.core.auth.LoginRequest;
 import com.java.bankingaccount.banking.user.dto.UserDto;
 import com.java.bankingaccount.banking.core.models.HttpResponse;
 import com.java.bankingaccount.banking.authentication.services.auth.AuthenticationServiceImpl;

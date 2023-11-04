@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.java.bankingaccount.banking.transaction.roots.StatisticEndpoint.*;
+import static com.java.bankingaccount.core.utils.RoleUtils.ADMIN_USER;
 import static com.java.bankingaccount.core.utils.RootEntPoint.ROOT_ENDPOINT;
 
 @RestController
@@ -26,7 +27,7 @@ public class StatisticResource {
     private final StatisticService statisticService;
 
     @GetMapping(SUM_BY_DATE_ENDPOINT)
-    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
+    @PreAuthorize(ADMIN_USER)
     public ResponseEntity<List<TransactionSumDetails>> findSumTransactionByDate(
             @RequestParam(name = "start-date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(name = "end-date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
@@ -35,7 +36,7 @@ public class StatisticResource {
     }
 
     @GetMapping(ACCOUNT_BALANCE_ENDPOINT)
-    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
+    @PreAuthorize(ADMIN_USER)
     public ResponseEntity<HttpResponse> getAccountBalance(@PathVariable(name = "userId") Integer userId) {
         var balance = statisticService.getAccountBalance(userId);
         return ResponseEntity.ok().body(
@@ -50,7 +51,7 @@ public class StatisticResource {
     }
 
     @GetMapping(HIGHEST_TRANSFER_ENDPOINT)
-    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
+    @PreAuthorize(ADMIN_USER)
     public ResponseEntity<HttpResponse> highestTransfer(@PathVariable(name = "userId") Integer userId) {
         var highestTransfer = statisticService.highestTransfer(userId);
         return ResponseEntity.ok().body(
@@ -65,7 +66,7 @@ public class StatisticResource {
     }
 
     @GetMapping(HIGHEST_DEPOSIT_ENDPOINT)
-    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
+    @PreAuthorize(ADMIN_USER)
     public ResponseEntity<HttpResponse> highestDeposit(@PathVariable(name = "userId") Integer userId) {
         var highestDeposit = statisticService.highestDeposit(userId);
         return ResponseEntity.ok().body(

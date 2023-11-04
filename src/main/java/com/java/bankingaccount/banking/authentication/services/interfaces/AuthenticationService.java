@@ -1,7 +1,7 @@
 package com.java.bankingaccount.banking.authentication.services.interfaces;
 
-import com.java.bankingaccount.banking.authentication.auth.AuthenticationResponse;
-import com.java.bankingaccount.banking.authentication.auth.LoginRequest;
+import com.java.bankingaccount.banking.core.auth.AuthenticationResponse;
+import com.java.bankingaccount.banking.core.auth.LoginRequest;
 import com.java.bankingaccount.banking.user.dto.UserDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

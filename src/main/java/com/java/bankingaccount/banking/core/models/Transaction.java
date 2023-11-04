@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Transaction extends AbstractEntity {
+public class Transaction extends AbstractEntity implements Serializable {
     private BigDecimal amount;
     @Enumerated(EnumType.ORDINAL)
     private TransactionType type;

@@ -6,12 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
+
 @Data
 @SuperBuilder
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Account extends AbstractEntity {
+public class Account extends AbstractEntity implements Serializable {
     private String iban;
 
     @OneToOne

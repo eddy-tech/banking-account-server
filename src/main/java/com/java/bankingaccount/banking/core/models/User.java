@@ -11,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "_users")
-public class User extends AbstractEntity implements UserDetails {
+public class User extends AbstractEntity implements UserDetails, Serializable {
     private String firstName;
     private String lastName;
     @Column(unique = true)

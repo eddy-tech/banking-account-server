@@ -1,4 +1,4 @@
-package com.java.bankingaccount.banking.authentication.auth;
+package com.java.bankingaccount.banking.core.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

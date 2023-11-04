@@ -1,8 +1,8 @@
 package com.java.bankingaccount.banking.authentication.services.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.java.bankingaccount.banking.authentication.auth.LoginRequest;
-import com.java.bankingaccount.banking.authentication.auth.AuthenticationResponse;
+import com.java.bankingaccount.banking.core.auth.LoginRequest;
+import com.java.bankingaccount.banking.core.auth.AuthenticationResponse;
 import com.java.bankingaccount.banking.authentication.services.interfaces.EmailService;
 import com.java.bankingaccount.banking.user.dto.UserDto;
 import com.java.bankingaccount.core.enums.TokenType;
@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,7 +43,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserService userService;
 
 
-
     @Override
     public UserDto register(UserDto userDto) {
         validator.validate(userDto);
@@ -50,12 +50,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         var saveUser = userRepository.save(user);
 
-        var accessToken = jwtService.generateToken(user);
+        var accessToken = jwtService.generateToken(saveUser);
         revokeAllUserTokens(saveUser);
         saveUserToken(saveUser, accessToken);
-
         emailService
-                .sendSimpleMailMessage(user.getFirstName(), user.getLastName(), user.getEmail(), accessToken);
+                .sendSimpleMailMessage(saveUser.getFirstName(), saveUser.getLastName(), saveUser.getEmail(), accessToken);
 
         return UserDto.fromUser(saveUser);
     }

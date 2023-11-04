@@ -1,11 +1,10 @@
 package com.java.bankingaccount.banking.user.resource;
 
-import com.java.bankingaccount.banking.authentication.auth.ChangePasswordRequest;
+import com.java.bankingaccount.banking.core.auth.ChangePasswordRequest;
 import com.java.bankingaccount.banking.user.dto.UserDto;
 import com.java.bankingaccount.banking.core.models.HttpResponse;
 import com.java.bankingaccount.banking.authentication.services.auth.LogoutService;
 import com.java.bankingaccount.banking.user.service.UserService;
-import com.java.bankingaccount.core.utils.RootEntPoint;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 import static com.java.bankingaccount.banking.user.roots.UserEndPoint.*;
+import static com.java.bankingaccount.core.utils.RoleUtils.ADMIN;
+import static com.java.bankingaccount.core.utils.RoleUtils.ADMIN_USER;
 import static com.java.bankingaccount.core.utils.RootEntPoint.ROOT_ENDPOINT;
 import static org.springframework.http.HttpStatus.*;
 
@@ -33,7 +34,7 @@ public class UserResource {
     private final LogoutService logoutService;
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<HttpResponse> save(@RequestBody UserDto dto) {
         var newUser = userService.save(dto);
         return ResponseEntity.created(URI.create("")).body(
@@ -48,13 +49,13 @@ public class UserResource {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<List<UserDto>> getAll() {
         return ResponseEntity.ok(userService.getAll());
     }
 
     @GetMapping(USER_ID_ENDPOINT)
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<HttpResponse> getById(@PathVariable("userId")Integer id) {
         var user = userService.getById(id);
         return ResponseEntity.ok().body(
@@ -69,7 +70,7 @@ public class UserResource {
     }
 
     @DeleteMapping(USER_ID_ENDPOINT)
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<HttpResponse> delete(@PathVariable("userId") Integer id) {
         userService.delete(id);
         return ResponseEntity.accepted().body(
@@ -83,7 +84,7 @@ public class UserResource {
     }
 
     @PatchMapping(USER_VALIDATE_ENDPOINT)
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<HttpResponse> validateAccount(@PathVariable("userId")Integer id) {
         var validate = userService.validateAccount(id);
         return ResponseEntity.ok().body(
@@ -98,7 +99,7 @@ public class UserResource {
     }
 
     @PatchMapping(USER_INVALIDATE_ENDPOINT)
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(ADMIN)
     public ResponseEntity<HttpResponse> invalidateAccount(@PathVariable("userId")Integer id) {
         var invalidate = userService.invalidateAccount(id);
         return ResponseEntity.ok().body(
@@ -113,7 +114,7 @@ public class UserResource {
     }
 
     @PatchMapping(USER_CHANGE_PASSWORD_ENDPOINT)
-    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
+    @PreAuthorize(ADMIN_USER)
     public ResponseEntity<?> changePassword(
             @RequestBody ChangePasswordRequest request,
             Principal connectedUser
@@ -123,7 +124,7 @@ public class UserResource {
     }
 
     @PatchMapping(LOGOUT_ENDPOINT)
-    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
+    @PreAuthorize(ADMIN_USER)
     public ResponseEntity<HttpResponse> logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         logoutService.logout(request, response, authentication);
         return ResponseEntity.ok().body(
