@@ -1,16 +1,13 @@
 package com.java.bankingaccount.web;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.java.bankingaccount.dto.AccountDto;
-import com.java.bankingaccount.dto.UserDto;
-import com.java.bankingaccount.repositories.AccountRepository;
-import com.java.bankingaccount.resources.AccountResource;
-import com.java.bankingaccount.services.impl.AccountServiceImpl;
+import com.java.bankingaccount.banking.account.dto.AccountDto;
+import com.java.bankingaccount.banking.user.dto.UserDto;
+import com.java.bankingaccount.banking.account.resource.AccountResource;
+import com.java.bankingaccount.banking.account.service.AccountServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -73,7 +70,7 @@ class AccountResourceTest {
                 );
 
         resultActions.andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.iban", is(accountDto.getIban())));
     }
 

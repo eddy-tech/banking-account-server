@@ -21,6 +21,33 @@ spring:
         refresh-token:
           expiration: 60480000
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    protocol: smtp
+    username: eddykokok@gmail.com
+    password: phyrzmtjdfxhxpmg
+    default-encoding: UTF-8
+    properties:
+      mail:
+        mime:
+          charset: UTF
+        smtp:
+          writetimeout: 10000
+          auth: true
+          ssl:
+            trust: smtp.gmail.com
+          starttls:
+            enable: true
+      verify:
+        host: http://localhost:8080
+      smtp:
+        connectiontimeout: 10000
+        timeout: 10000
+        starttls:
+          required: true
+
+
 
 #sonar:
 #  projectKey: banking-account

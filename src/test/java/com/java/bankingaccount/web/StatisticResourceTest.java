@@ -1,9 +1,9 @@
 package com.java.bankingaccount.web;
 
-import com.java.bankingaccount.projections.TransactionSumDetails;
-import com.java.bankingaccount.repositories.TransactionRepository;
-import com.java.bankingaccount.resources.StatisticResource;
-import com.java.bankingaccount.services.impl.StatisticServiceImpl;
+import com.java.bankingaccount.banking.transaction.projections.TransactionSumDetails;
+import com.java.bankingaccount.banking.transaction.repository.TransactionRepository;
+import com.java.bankingaccount.banking.transaction.resources.StatisticResource;
+import com.java.bankingaccount.banking.transaction.services.StatisticServiceImpl;
 import jakarta.validation.constraints.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,6 @@ class StatisticResourceTest {
     LocalDate startDate = LocalDate.of(2023, Month.JUNE, 7);
     LocalDate endDate = LocalDate.of(2023, Month.DECEMBER, 7);
     Integer userId = 1;
-
 
     @BeforeEach
     void setUp(){

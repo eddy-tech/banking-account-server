@@ -1,0 +1,12 @@
+package com.java.bankingaccount.core.utils;
+
+public class EmailUtils {
+    public static String getEmailMessage(String firstName, String lastName, String host, String token) {
+        return "Hello " + lastName + " " + firstName +  ",\n\nYour new account has been created. Please click the link below to verify your account. \n\n"
+                + getVerificationUrl(host, token) + "\n\nThe support Team";
+    }
+
+    public static String getVerificationUrl(String host, String token) {
+        return host + RootEntPoint.ROOT_ENDPOINT + "/auth?token=" + token;
+    }
+}

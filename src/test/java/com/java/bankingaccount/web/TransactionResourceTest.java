@@ -1,10 +1,10 @@
 package com.java.bankingaccount.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.java.bankingaccount.dto.TransactionDto;
-import com.java.bankingaccount.resources.TransactionResource;
-import com.java.bankingaccount.services.impl.TransactionServiceImpl;
-import com.java.bankingaccount.utils.TransactionType;
+import com.java.bankingaccount.banking.transaction.dto.TransactionDto;
+import com.java.bankingaccount.banking.transaction.resources.TransactionResource;
+import com.java.bankingaccount.banking.transaction.services.TransactionServiceImpl;
+import com.java.bankingaccount.core.utils.TransactionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -56,7 +56,7 @@ class TransactionResourceTest {
     }
 
     @Test
-    void givenTransactionDtoObject_whenCreateContact_thenReturnTransactionObject200() throws Exception {
+    void givenTransactionDtoObject_whenCreateContact_thenReturnTransactionObject202() throws Exception {
         given(transactionService.save(any(TransactionDto.class)))
                 .willReturn(transactionDto);
 
@@ -67,7 +67,7 @@ class TransactionResourceTest {
                 );
 
         resultActions.andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.amount", is(Double.valueOf(String.valueOf(transactionDto.getAmount())))))
                 .andExpect(jsonPath("$.type", is(String.valueOf(transactionDto.getType()))))
                 .andExpect(jsonPath("$.destinationIban", is(transactionDto.getDestinationIban())))
@@ -118,7 +118,7 @@ class TransactionResourceTest {
     }
 
     @Test
-    void givenTransactionId_whenDeleteTransaction_thenReturn200() throws Exception {
+    void givenTransactionId_whenDeleteTransaction_thenReturn204() throws Exception {
         willDoNothing().given(transactionService).delete(transactionDto.getId());
 
         var resultActions = mockMvc

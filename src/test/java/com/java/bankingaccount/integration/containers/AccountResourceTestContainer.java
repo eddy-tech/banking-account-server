@@ -1,19 +1,17 @@
 package com.java.bankingaccount.integration.containers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.java.bankingaccount.dto.AccountDto;
 import com.java.bankingaccount.integration.AbstractionContainerBaseTest;
-import com.java.bankingaccount.models.Account;
-import com.java.bankingaccount.models.Address;
-import com.java.bankingaccount.models.User;
-import com.java.bankingaccount.repositories.AccountRepository;
-import com.java.bankingaccount.repositories.AddressRepository;
-import com.java.bankingaccount.repositories.UserRepository;
+import com.java.bankingaccount.banking.core.models.Account;
+import com.java.bankingaccount.banking.core.models.Address;
+import com.java.bankingaccount.banking.core.models.User;
+import com.java.bankingaccount.banking.account.repository.AccountRepository;
+import com.java.bankingaccount.banking.address.repository.AddressRepository;
+import com.java.bankingaccount.banking.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;

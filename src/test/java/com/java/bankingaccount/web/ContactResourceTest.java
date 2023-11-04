@@ -1,9 +1,9 @@
 package com.java.bankingaccount.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.java.bankingaccount.dto.ContactDto;
-import com.java.bankingaccount.resources.ContactResource;
-import com.java.bankingaccount.services.impl.ContactServiceImpl;
+import com.java.bankingaccount.banking.contact.dto.ContactDto;
+import com.java.bankingaccount.banking.contact.resource.ContactResource;
+import com.java.bankingaccount.banking.contact.service.ContactServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -52,7 +52,7 @@ class ContactResourceTest {
     }
 
     @Test
-    void givenContactDtoObject_whenCreateContact_thenReturnContactObject200() throws Exception {
+    void givenContactDtoObject_whenCreateContact_thenReturnContactObject202() throws Exception {
         given(contactService.save(any(ContactDto.class)))
                 .willReturn(contactDto);
 
@@ -63,7 +63,7 @@ class ContactResourceTest {
                 );
 
         resultActions.andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstName", is(contactDto.getFirstName())))
                 .andExpect(jsonPath("$.lastName", is(contactDto.getLastName())))
                 .andExpect(jsonPath("$.email", is(contactDto.getEmail())))
@@ -114,7 +114,7 @@ class ContactResourceTest {
     }
 
     @Test
-    void givenContactId_whenDeleteContact_thenReturn200() throws Exception {
+    void givenContactId_whenDeleteContact_thenReturn204() throws Exception {
         willDoNothing().given(contactService).delete(contactDto.getId());
 
         var resultActions = mockMvc

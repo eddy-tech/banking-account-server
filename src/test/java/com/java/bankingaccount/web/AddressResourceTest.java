@@ -1,19 +1,12 @@
 package com.java.bankingaccount.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.java.bankingaccount.dto.AccountDto;
-import com.java.bankingaccount.dto.AddressDto;
-import com.java.bankingaccount.dto.UserDto;
-import com.java.bankingaccount.repositories.AccountRepository;
-import com.java.bankingaccount.repositories.AddressRepository;
-import com.java.bankingaccount.resources.AccountResource;
-import com.java.bankingaccount.resources.AddressResource;
-import com.java.bankingaccount.services.impl.AccountServiceImpl;
-import com.java.bankingaccount.services.impl.AddressServiceImpl;
+import com.java.bankingaccount.banking.address.dto.AddressDto;
+import com.java.bankingaccount.banking.address.resource.AddressResource;
+import com.java.bankingaccount.banking.address.service.AddressServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -60,7 +53,7 @@ class AddressResourceTest {
     }
 
     @Test
-    void givenAddressDtoObject_whenCreateAddress_thenReturnAddressObject200() throws Exception {
+    void givenAddressDtoObject_whenCreateAddress_thenReturnAddressObject201() throws Exception {
         given(addressService.save(any(AddressDto.class)))
                 .willReturn(addressDto);
 
@@ -71,7 +64,7 @@ class AddressResourceTest {
                 );
 
         resultActions.andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.street", is(addressDto.getStreet())))
                 .andExpect(jsonPath("$.city", is(addressDto.getCity())))
                 .andExpect(jsonPath("$.zipCode", is(addressDto.getZipCode())))
@@ -108,7 +101,7 @@ class AddressResourceTest {
     }
 
     @Test
-    void givenAddressId_whenDeleteAddress_thenReturn200() throws Exception {
+    void givenAddressId_whenDeleteAddress_thenReturn204() throws Exception {
         willDoNothing().given(addressService).delete(1);
 
         var resultActions = mockMvc
