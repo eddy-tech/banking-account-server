@@ -55,7 +55,8 @@ public class SecurityConfig {
                                 ENDPOINT_LIST
                         )
                                 .permitAll()
-                                .requestMatchers(ROOT_ENDPOINT + "/users/**").hasRole(ADMIN.name())                               .requestMatchers(ROOT_ENDPOINT + "/transactions/**").hasAnyAuthority(USER.name(), ADMIN.name())
+                                .requestMatchers(ROOT_ENDPOINT + "/users/**").hasRole(ADMIN.name())
+                                .requestMatchers(ROOT_ENDPOINT + "/transactions/**").hasAnyAuthority(USER.name(), ADMIN.name())
                                 .requestMatchers(ROOT_ENDPOINT + "/contacts/**").hasRole(ADMIN.name())
                                 .requestMatchers(ROOT_ENDPOINT + "/accounts/**").hasRole(ADMIN.name())
                                 .requestMatchers(ROOT_ENDPOINT + "/address/**").hasAnyRole(ADMIN.name(), USER.name())
