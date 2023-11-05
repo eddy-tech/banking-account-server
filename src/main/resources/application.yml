@@ -16,7 +16,7 @@ spring:
   application:
     security:
       jwt:
-        secret-key: 36763979244226452948404D6351665468576D5A7134743777217A25432A462D
+        secret-key:
         expiration: 5686000 # Temps d'expiration du jeton en millisecondes (par exemple, 1 heure)
         refresh-token:
           expiration: 60480000
@@ -26,7 +26,7 @@ spring:
     port: 587
     protocol: smtp
     username: eddykokok@gmail.com
-    password: phyrzmtjdfxhxpmg
+    password:
     default-encoding: UTF-8
     properties:
       mail:
@@ -46,12 +46,3 @@ spring:
         timeout: 10000
         starttls:
           required: true
-
-
-
-#sonar:
-#  projectKey: banking-account
-#  projectName: banking-account
-#  host.url: http://localhost:9000
-#  login: admin
-#  password: Password2023
