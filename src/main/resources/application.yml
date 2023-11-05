@@ -21,7 +21,6 @@ spring:
         refresh-token:
           expiration: 60480000
 
-
 #sonar:
 #  projectKey: banking-account
 #  projectName: banking-account

@@ -1,6 +1,6 @@
 # banking-account-server 
 
-This project is the backend application of banking account developed with Spring Boot. It offers some features to create, update, read and delete account bank. We can get deposit and transfer money to account and each have to enabled after creating by back office more preciously validated by administrator.
+This project is the backend application of banking account developed with Spring Boot. It offers some features to create, update, read and delete account bank. We can get deposit and transfer money to account and each have to be enabled after creating by email validation and the administrator can also enabled user if user has been created by him.
 
 ## Prérequis
 
