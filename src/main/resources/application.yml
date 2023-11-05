@@ -6,9 +6,20 @@ spring:
     password: root
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  mvc:
+    format:
+      date: yyyy-MM-dd
+  application:
+    security:
+      jwt:
+        secret-key: 36763979244226452948404D6351665468576D5A7134743777217A25432A462D
+        expiration: 5686000 # Temps d'expiration du jeton en millisecondes (par exemple, 1 heure)
+        refresh-token:
+          expiration: 60480000
 
 #sonar:
 #  projectKey: banking-account

@@ -7,13 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-    List<User> findAllByFirstName(String firstName);
+    Optional<User> findUserByEmail(String email);
 
     @Query("from User where firstName = ?1")
     List<User> getAllUsersByFirstName(String firstName);
-
 
     @Query("from User u inner join Account a on u.id = a.user.id and a.iban = ?1")
     List<User> findAllByAccountIban(String iban);

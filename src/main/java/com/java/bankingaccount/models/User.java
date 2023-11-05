@@ -1,11 +1,16 @@
 package com.java.bankingaccount.models;
 
+import com.java.bankingaccount.enums.Roles;
+import com.java.bankingaccount.models.token.AccessToken;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -14,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "_users")
-public class User extends AbstractEntity{
+public class User extends AbstractEntity implements UserDetails {
     private String firstName;
     private String lastName;
     @Column(unique = true)
@@ -28,9 +33,40 @@ public class User extends AbstractEntity{
     private List<Transaction> transactionList;
     @OneToMany(mappedBy = "user")
     private List<Contact> contactList;
+    @OneToMany(mappedBy = "user")
+    private List<AccessToken> accessTokenList;
     @OneToOne
     private Account account;
-    @OneToOne
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    private Roles roles;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.getAuthorities();
+    }
+
+    @Override
+    public String getUsername() { return email; }
+    @Override
+    public String getPassword() { return password; }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return active;
+    }
 }

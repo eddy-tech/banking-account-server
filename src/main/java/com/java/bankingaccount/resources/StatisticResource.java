@@ -6,6 +6,7 @@ import com.java.bankingaccount.utils.RootEntPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -19,6 +20,7 @@ public class StatisticResource {
     private final StatisticService statisticService;
 
     @GetMapping("/sum-by-date/{userId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
     public ResponseEntity<List<TransactionSumDetails>> findSumTransactionByDate(
             @RequestParam(name = "start-date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(name = "end-date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
@@ -27,16 +29,19 @@ public class StatisticResource {
     }
 
     @GetMapping("/account-balance/{userId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
     public ResponseEntity<BigDecimal> getAccountBalance(@PathVariable(name = "userId") Integer userId) {
         return ResponseEntity.ok(statisticService.getAccountBalance(userId));
     }
 
     @GetMapping("/highest-transfer/{userId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
     public ResponseEntity<BigDecimal> highestTransfer(@PathVariable(name = "userId") Integer userId) {
         return ResponseEntity.ok(statisticService.highestTransfer(userId));
     }
 
     @GetMapping("/highest-deposit/{userId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
     public ResponseEntity<BigDecimal> highestDeposit(@PathVariable(name = "userId") Integer userId) {
         return ResponseEntity.ok(statisticService.highestDeposit(userId));
     }
