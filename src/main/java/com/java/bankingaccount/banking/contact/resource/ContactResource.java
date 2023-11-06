@@ -3,7 +3,6 @@ package com.java.bankingaccount.banking.contact.resource;
 import com.java.bankingaccount.banking.contact.dto.ContactDto;
 import com.java.bankingaccount.banking.core.models.HttpResponse;
 import com.java.bankingaccount.banking.contact.service.ContactService;
-import com.java.bankingaccount.core.utils.RootEntPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

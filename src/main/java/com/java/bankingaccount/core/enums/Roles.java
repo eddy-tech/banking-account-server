@@ -20,7 +20,6 @@ public enum Roles {
             )
     )
     ,
-
     USER(
             Set.of(
                     Permission.USER_CREATE, Permission.USER_DELETE, Permission.USER_UPDATE, Permission.USER_READ

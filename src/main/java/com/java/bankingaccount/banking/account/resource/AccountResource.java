@@ -3,7 +3,6 @@ package com.java.bankingaccount.banking.account.resource;
 import com.java.bankingaccount.banking.account.dto.AccountDto;
 import com.java.bankingaccount.banking.core.models.HttpResponse;
 import com.java.bankingaccount.banking.account.service.AccountService;
-import com.java.bankingaccount.core.utils.RootEntPoint;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
