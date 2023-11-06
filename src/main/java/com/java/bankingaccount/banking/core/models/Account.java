@@ -1,6 +1,5 @@
 package com.java.bankingaccount.banking.core.models;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
