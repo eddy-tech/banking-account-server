@@ -3,7 +3,6 @@ package com.java.bankingaccount.banking.address.resource;
 import com.java.bankingaccount.banking.address.dto.AddressDto;
 import com.java.bankingaccount.banking.core.models.HttpResponse;
 import com.java.bankingaccount.banking.address.service.AddressService;
-import com.java.bankingaccount.core.utils.RootEntPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -3,7 +3,6 @@ package com.java.bankingaccount.banking.transaction.resources;
 import com.java.bankingaccount.banking.transaction.dto.TransactionDto;
 import com.java.bankingaccount.banking.core.models.HttpResponse;
 import com.java.bankingaccount.banking.transaction.services.TransactionService;
-import com.java.bankingaccount.core.utils.RootEntPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

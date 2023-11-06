@@ -25,7 +25,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     protocol: smtp
-    username:
+    username: eddykokok@gmail.com
     password: phyrzmtjdfxhxpmg
     default-encoding: UTF-8
     properties:

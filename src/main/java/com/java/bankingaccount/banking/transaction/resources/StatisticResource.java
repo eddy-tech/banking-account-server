@@ -3,7 +3,6 @@ package com.java.bankingaccount.banking.transaction.resources;
 import com.java.bankingaccount.banking.core.models.HttpResponse;
 import com.java.bankingaccount.banking.transaction.projections.TransactionSumDetails;
 import com.java.bankingaccount.banking.transaction.services.StatisticService;
-import com.java.bankingaccount.core.utils.RootEntPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
