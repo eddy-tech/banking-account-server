@@ -16,6 +16,10 @@ Before starting, Make sure that some tools are installed on your system :
 
 Application will be accessible to next address : `http://localhost:8080` 
 
+Accessing to openApi: `http://localhost:8080/swagger-ui.html` 
+
+Acessing to api-docs: `http://localhost:8080/v3/api-docs`
+
 ## Contribuer
 
 The contributions are welcome ! For the suggestions, reports of bugs or contributions, please create a issue or fork project and submit a pull request.
